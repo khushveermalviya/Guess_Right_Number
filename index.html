@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+  .red-background {
+    background-color: red;
+    transition: background-color 2s; /* Transition for a smooth color change */
+}
+
+    body{
+        background-color: black;
+        color: white;
+
+    }
+    h1{display:flex;
+        font-size: 45px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        justify-content: center;
+    }
+    p{
+        display:flex;
+        font-size: 45px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        justify-content: center;
+    }
+    .inputs{display: flex;
+        justify-content: center;
+        font-size: 45px;
+    }
+    #guessField{
+        border-radius: 45px;
+    }
+    #subt{
+        border-radius: 12px;
+        background-color: aquamarine;
+    }
+    .super{
+        display:flex;
+        font-size: 30px;
+        color: red;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        justify-content: center;
+    }
+    @media (max-width:400px) {
+.wrapper .in{
+    top: 83px;
+    position: absolute;
+    right: 132px;
+}
+.wrapper p{
+    font-variant: petite-caps;
+    left: 9px;
+    top: 15px;
+    position: relative;
+    font-family: monospace;
+    font-size: 35px;
+}
+#guess{
+    right: -72px;
+    position: relative;
+    font-size: 35px;
+}
+.guesses{
+    width: 25px;
+    top: 64px;
+    right: 327px;
+    position: relative;
+}
+        #guessField{
+            left: -119px;
+    top: 67px;
+    position: relative;
+    border-radius: 40px;
+    width: 113px;
+    height: 36px;
+    }
+    #subt{
+        right: 76px;
+    top: 66px;
+    position: relative;
+        
+    }
+    .super{
+        font-variant: petite-caps;
+    left: 9px;
+    top: 98px;
+    position: relative;
+    font-family: monospace;
+    font-size: 35px;
+        
+    }
+    .resultParas{
+        position: relative;
+    top: 73px;
+    }
+}
+    @media (max-width:376px) {
+
+        #guessField{
+            left: -119px;
+    top: 105px;
+    position: relative;
+    border-radius: 40px;
+    width: 113px;
+    height: 36px;
+    }
+    #subt{
+        height: 36px;
+    right: 76px;
+    top: 110px;
+    position: relative;
+        
+    }
+   
+    
+    
+}
+@media (max-width:415px){
+    .wrapper .in{
+    top: 83px;
+    position: absolute;
+    right: 132px;
+}
+.wrapper p{
+    font-variant: petite-caps;
+    left: 9px;
+    top: 15px;
+    position: relative;
+    font-family: monospace;
+    font-size: 35px;
+}
+.resultParas{
+        position: relative;
+    top: 73px;
+    }
+    #guessField{
+            left: -119px;
+    top: 105px;
+    position: relative;
+    border-radius: 40px;
+    width: 113px;
+    height: 36px;
+    }
+    #subt{
+        height: 36px;
+    right: 76px;
+    top: 110px;
+    position: relative;
+        
+    }
+   
+}
+</style>
+<body>
+    <div class="wrapper">
+        <h1>Number Gussing <span class="in">Game</span> </h1>
+        <p>Try to  guess a random number form 1 to 100</p>
+        <p>
+            You have to 10 attempt to guess right number
+        </p>
+        <form class="inputs">
+            <label for="guessField" id="guess">Enter a guess: </label>
+            <input type="text" id="guessField" class="guessfield">
+            <input type="submit" id="subt" value="Submit" class="guessSubmit">
+        </form>
+        <audio id="song">
+            <source src="crowd-cheer-ii-6263.mp3" type="audio/mpeg">
+          
+        </audio>
+        <audio id="songs">
+            <source src="buzzer-or-wrong-answer-20582.mp3" type="audio/mpeg">
+          
+        </audio>
+        <audio id="songss">
+            <source src="game-over-arcade-6435.mp3" type="audio/mpeg">
+          
+        </audio>
+        <span class="super"> </span>
+        <div class="resultParas">
+            <p>Previous gueses: <br><span class="guesses"></span></p></br>
+            <p>remaining guess: <span class="lastresult" >10</span></p>
+            <p class="loworhi"></p>
+            
+        </div>
+    </div>
+    <script>
+         let random=parseInt(Math.random()*100+1);
+        console.log(random);
+        const submit=document.querySelector('#subt')
+        const userinput    =document.querySelector('#guessField')
+        const result=document.querySelector('.guesses')
+        const remaining=document.querySelector('.lastresult')
+        const loworhi=document.querySelector('.loworhi')
+        const startover=document.querySelector('.resultParas')
+        const alerts= document.querySelector('.super')
+        const p =document.createElement('p')
+        
+          let previousGuess=[]
+          let NumGuess=1;
+          let playGame =true;
+         
+if(playGame){
+    submit.addEventListener('click',function(e){
+        e.preventDefault();
+        const guess=parseInt(userinput.value)
+        console.log(guess);
+        checkvaildtion(guess);
+    })
+}
+          
+          function checkvaildtion(guess)  
+          {
+            if (userinput.value === "") {
+                alerts.textContent='Enter a vaild volume '
+
+    }else if(guess <1){
+       
+        alerts.textContent='Enter a vaild more than 1'
+    }else if(guess >100){
+        alerts.textContent='Enter a vaild less than 100'
+    }else{
+        alerts.textContent = '';
+        // previousGuess.push();
+        if(NumGuess==11){
+
+    
+        displayguess(guess)
+        displaymessage(`Game over the Right Random number is${random}`)   
+        songss.play()
+        endgame();
+     }else{
+        if (guess !== random) {
+                // If the guess is incorrect, add the red background class
+                document.querySelector('.wrapper').classList.add('red-background');
+                setTimeout(() => {
+                    // After 2 seconds, remove the red background class
+                    document.querySelector('.wrapper').classList.remove('red-background');
+                }, 2000);
+            }
+        checkguess(guess)
+        displayguess(guess)
+        
+     }
+    
+    }
+
+          }
+          function  checkguess(guess){
+            if(guess===random){
+                song.play();
+                displaymessage('you guess the Right Number')
+
+            }else if(guess < random){
+                songs.play();
+
+                displaymessage('Number is TOoooooooo low')
+
+            }else if(guess >random){
+                songs.play();
+
+                displaymessage('Number is TOoooooooo high')
+            }
+          }
+          function displayguess(guess){
+            userinput.value=''
+result.textContent +=`,${guess}`;
+NumGuess++;
+remaining.textContent=`${12-NumGuess}`;
+          }
+          function displaymessage(message){
+            loworhi.textContent=  `${message}`
+          }
+          
+          
+          function endgame() {
+    userinput.value = '';
+    userinput.setAttribute('disabled', '');
+    p.classList.add('button');
+    p.innerHTML = `<h2 id="newgame">Start New Game</h2>`;
+    startover.appendChild(p);
+    playGame = false;
+    // Clear the previousGuess array
+    previousGuess = [];
+    newgame();
+}  function newgame(){ 
+const start=document.querySelector('#newgame')
+start.addEventListener('click',function(e){
+    random=parseInt(Math.random()*100+1);
+
+    prGuess=[]
+  numGuess=1;
+  previous.textContent=''
+  remaining.textContent=`${11-numGuess}`
+  userinput.removeAttribute=('disabled')
+startover.removeChild(p);
+})
+         }
+
+          
+          
+          
+          
+          
+          </script>
+</body>
+</html>
